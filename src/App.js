@@ -8,11 +8,52 @@ class App extends React.Component{
     super();
       this.state = {
         products: data.products,
-        sizes: "",
+        size: "",
         sort: "",
       };
     
   }
+
+
+sortProducts=(event)=>{
+  //implement sort code
+  const sort = event.target.value;
+  console.log(event.target.value);
+  this.setState((state)=>({
+    sort: sort,
+    products : this.state.products
+    .slice()
+    .sort((a,b)=>
+      sort === "Lowest"?
+      a.price > b.price
+      ?1
+      :-1
+      :sort === "Highest"?
+      a.price < b.price
+      ?1
+      :-1
+      :a._id < b._id
+      ?1
+      :-1
+    ),
+  }));
+};
+
+
+filterProducts = (event)=>{
+  //implement size code
+  if(event.target.value === ""){
+    this.setState({size: event.target.value, products: data.products});
+  }else{
+    this.setState({
+      size: event.target.value,
+      products: data.products.filter(product=>product.availableSizes.indexOf(event.target.value)>=0)
+    })
+
+  }
+ 
+}
+
   render(){
   return (
         <div className='grid-container'>
@@ -23,7 +64,12 @@ class App extends React.Component{
                   <main>
                     <div className="content">
                       <div className="main">
-                      <Filter></Filter>
+                      <Filter count={this.state.products.length}
+                      size={this.state.sizes}
+                      sort={this.state.sort}
+                      filterProducts={this.filterProducts}
+                      sortProducts={this.sortProducts}
+                      ></Filter>
                       <Products products={this.state.products}></Products>
                       </div>
 
