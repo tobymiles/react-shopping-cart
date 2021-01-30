@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Products from "./components/products";
+import data from "./data.json";
 
-function App() {
+class App extends React.Component{
+  constructor(){
+    super();
+      this.state = {
+        products: data.products,
+        sizes: "",
+        sort: "",
+      };
+    
+  }
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <div className='grid-container'>
+            <header>
+              <a href='./'>React Shoppin Cart</a>
+            </header>
+
+                  <main>
+                    <div className="content">
+                      <div className="main">
+                      <Products products={this.state.products}></Products>
+                      </div>
+
+                    <div className="sidebar">Cart Items</div>
+
+                    </div>
+                  </main>
+
+
+                  <footer>
+                    All rights is reserved
+                  </footer>
+        </div>
   );
+}
 }
 
 export default App;
